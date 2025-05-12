@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>제이미시계</title>
+  <style>
+    #clock2 {
+      width: 600px; height: 600px;
+      border: 5px solid pink;
+      border-radius: 50%;
+      position: relative;
+      background-image: url(./images/jammie1.png);
+      background-size: cover;
+      background-position: 0 -15px;
+    }
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom;
+      background-color: black;
+    }
+    .hour   { height: 170px; width: 8px; background-color: yellow; border-radius: 4px;}
+    .minute { height: 220px; width: 6px; background-color: black; border-radius: 3px;}
+    .second { height: 250px; width: 4px; background: red; border-radius: 2px;}
+
+    .time{
+      position: absolute; 
+      font-size: 56px; font-weight: 900;
+      font-family: 'Gill Sans'; color: violet;
+      line-height: 56px;
+    }
+    .one {
+      top: 2%; right: 25%;
+    }
+    .two {
+      top: 17%; right: 11%;
+    }
+    .three {
+      top: 36%; right: 6%;
+    }
+    .four {
+      top: 55%; right: 11%;
+    }
+    .five {
+      top: 69%; right: 25%;
+    }
+    .six {
+      top: 76%; left: 48%;
+    }
+    .seven {
+      top: 69%; left: 26%;
+    }
+    .eight {
+      top: 55%; left: 13%;
+    }
+    .nine {
+      top: 36%; left: 7%;
+    }
+    .ten {
+      top: 17%; left: 11%;
+    }
+    .eleven {
+      top: 2%; left: 23%;
+    }
+    .twelve {
+      top: -5%; left: 44%;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="clock2">
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="minute"></div>
+    <div class="hand second" id="second"></div>
+
+    <p class="time one">1</p>
+    <p class="time two">2</p>
+    <p class="time three">3</p>
+    <p class="time four">4</p>
+    <p class="time five">5</p>
+    <p class="time six">6</p>
+    <p class="time seven">7</p>
+    <p class="time eight">8</p>
+    <p class="time nine">9</p>
+    <p class="time ten">10</p>
+    <p class="time eleven">11</p>
+    <p class="time twelve">12</p>
+  </div>
+  <input type="file" name="" id="bgInput" onchange="backImg();">
+  <br><br><br><br><br>
+
+  <script>
+    function updateClock(){
+      const now = new Date();
+      const hour = now.getHours() % 12;
+      const minute = now.getMinutes();
+      const second = now.getSeconds();
+
+      document.getElementById("hour").style.transform = 
+        `rotate(${hour * 30 + minute *0.5}deg)`;
+      document.getElementById("minute").style.transform =
+        `rotate(${minute * 6 + second * 0.1}deg)`;
+      document.getElementById("second").style.transform =
+        `rotate(${second * 6}deg)`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function backImg(){
+      const bgInput = document.getElementById("bgInput");
+      const file = bgInput.files[0];
+      const clock = document.getElementById("clock2");
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          clock.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html>
